@@ -1,0 +1,20 @@
+---
+
+- hosts: all
+  remote_user: vagrant
+  become: yes
+
+  vars:
+    httpd_modules:
+      - mod_auth_openidc
+    httpd_mpm_module: 'event'
+    httpd_mpm_event_config:
+      ServerLimit: 16
+      MaxClients: 400
+      StartServers: 3
+      ThreadsPerChild: 25
+      ThreadLimit: 64
+    httpd_disable_welcome: yes
+
+  roles:
+  - ../../tamay.httpd

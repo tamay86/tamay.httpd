@@ -1,0 +1,12 @@
+---
+# handlers file for tamay.httpd
+
+- name: "reload_httpd"
+  service:
+    name: httpd
+    state: reloaded
+
+- name: "restart_httpd"
+  service:
+    name: httpd
+    state: restarted

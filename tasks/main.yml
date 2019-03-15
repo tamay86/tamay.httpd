@@ -1,0 +1,37 @@
+---
+# tasks file for tamay.httpd
+
+- name: "Install httpd and mod_ssl"
+  package:
+    state: present
+    name:
+      - httpd
+      - mod_ssl
+
+- name: "Install additional httpd modules"
+  package:
+    state: present
+    name: "{{ httpd_modules }}"
+
+- name: "Enable mpm_{{ httpd_mpm_module }}_module"
+  template:
+    src: 00-mpm.conf.j2
+    dest: /etc/httpd/conf.modules.d/00-mpm.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: "restart_httpd"
+
+- name: "Disable welcome.conf"
+  replace:
+    path: /etc/httpd/conf.d/welcome.conf
+    regexp: '^((?!#))'
+    replace: '#'
+  notify: "reload_httpd"
+  when: httpd_disable_welcome
+
+- name: "Start and enable httpd service"
+  service:
+    name: httpd
+    state: started
+    enabled: yes
