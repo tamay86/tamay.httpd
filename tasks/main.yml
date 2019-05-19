@@ -28,7 +28,7 @@
     regexp: '^((?!#))'
     replace: '#'
   notify: "reload_httpd"
-  when: httpd_disable_welcome
+  when: httpd_disable_welcome | bool
 
 - name: "Create /var/www/vhosts"
   file:
