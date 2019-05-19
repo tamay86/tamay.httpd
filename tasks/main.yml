@@ -30,6 +30,14 @@
   notify: "reload_httpd"
   when: httpd_disable_welcome
 
+- name: "Create /var/www/vhosts"
+  file:
+    state: directory
+    path: /var/www/vhosts
+    owner: root
+    group: root
+    mode: 0755
+
 - name: "Start and enable httpd service"
   service:
     name: httpd
