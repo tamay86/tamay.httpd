@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+<VirtualHost *:80>
+    ServerName {{ item.servername }}
+{% if item.errorlog is defined %}
+    ErrorLog {{ item.errorlog }}
+{% endif %}
+{% if item.customlog is defined %}
+    CustomLog {{ item.customlog }} combined
+{% endif %}
+{% if item.documentroot is defined %}
+    DocumentRoot {{ item.documentroot }}
+{% endif %}
+
+{% if item.options is defined %}
+    {{ item.options }}
+{% endif %}
+</VirtualHost>

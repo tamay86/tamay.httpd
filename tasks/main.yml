@@ -39,6 +39,26 @@
     mode: 0644
   notify: reload_httpd
 
+- name: "Copy vhosts to /etc/httpd/conf.d"
+  template:
+    src: vhost.j2
+    dest: /etc/httpd/conf.d/{{ item.servername }}.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload_httpd
+  loop: "{{ httpd_vhosts }}"
+
+- name: "Copy ssl-vhosts to /etc/httpd/conf.d"
+  template:
+    src: vhost-ssl.j2
+    dest: /etc/httpd/conf.d/{{ item.servername }}-ssl.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload_httpd
+  loop: "{{ httpd_vhosts_ssl }}"
+
 - name: "Create /var/www/vhosts"
   file:
     state: directory

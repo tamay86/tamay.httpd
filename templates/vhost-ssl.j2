@@ -1,0 +1,44 @@
+# {{ ansible_managed }}
+<VirtualHost *:443>
+    ServerName {{ item.servername }}
+
+{% if item.errorlog is defined -%}
+    ErrorLog {{ item.errorlog }}
+{% endif -%}
+
+{% if item.customlog is defined -%}
+    CustomLog {{ item.customlog }} combined
+{% endif -%}
+
+{% if item.documentroot is defined -%}
+    DocumentRoot {{ item.documentroot }}
+{% endif %}
+    SSLEngine on
+    SSLCertificateFile {{ item.ssl_certificate | default(httpd_ssl_certificate) }}
+    SSLCertificateKeyFile {{ item.ssl_key | default(httpd_ssl_key) }}
+{% if item.ssl_protocol is defined %}
+    SSLProtocol {{ item.ssl_protocol }}
+{% endif %}
+{% if item.ssl_cipher is defined %}
+    SSLCipherSuite {{ item.ssl_cipher }}
+{% endif %}
+{% if item.ssl_honor_cipher is defined %}
+    SSLHonorCipherOrder on
+{% endif %}
+{% if item.ssl_chain is defined %}
+{% if item.ssl_chain != 'EMPTY' %}
+    SSLCertificateChainFile {{ item.ssl_chain }}
+{% endif %}
+{% endif %}
+{% if item.ssl_ca is defined %}
+{% if item.ssl_ca != 'EMPTY' %}
+    SSLCACertificateFile {{ item.ssl_ca }}
+{% endif %}
+{% endif %}
+    # HSTS (mod_headers is required) (15768000 seconds = 6 months)
+    Header always set Strict-Transport-Security "max-age={{ item.ssl_hsts | default(httpd_ssl_hsts) }}"
+
+{% if item.options is defined %}
+    {{ item.options }}
+{% endif %}
+</VirtualHost>

@@ -54,6 +54,52 @@ Disables the default welcome website.
     httpd_ssl_hsts: 15768000
     httpd_ssl_oscp_stapling: yes
 
+Configure settings in ```/etc/httpd/conf.d/ssl.conf```. Except for the certificate options and HSTS, they are globally valid. 
+
+    # <VirtualHost *:80> configuration
+    httpd_vhosts: []
+    # Example:
+    #  - servername: www.example.com
+    #    options: |
+    #      Redirect permanent / https://www.example.com/
+    #  - servername: cloud.example.com
+    #    documentroot: /var/www/cloud/
+    #    errorlog: /var/log/httpd/cloud.example.com-error.log
+    #    customlog: /var/log/httpd/cloud.example.com-access.log
+
+With ```httpd_vhosts``` you can create VirtualHost files. They are only for http (Port80). Only ```servername``` is mandatory. Optional are ```documentroot```, ```errorlog```, ```customlog``` and ```options```.  
+With ```options``` you can define everything else, that is not covered by variables. See the examples. 
+    
+    # <VirtualHost *:443> configuration
+    httpd_vhosts_ssl: []
+    # Example:
+    #httpd_ssl_vhosts:
+    #  - servername: www.example.com
+    #      documentroot: /var/www/html/
+    #      errorlog: /var/log/httpd/www.example.com-error.log
+    #      customlog: /var/log/httpd/www.example.com-access.log
+    #      options: |
+    #        <Directory /var/www/html/>
+    #            Options +FollowSymlinks
+    #            AllowOverride All
+    #        </Directory>
+    #      ssl_protocol: "{{ httpd_ssl_protocol }}"
+    #      ssl_cipher: "{{ httpd_ssl_cipher }}"
+    #      ssl_honor_cipher: "{{ httpd_ssl_honor_cipher }}"
+    #      ssl_certificate: "{{ httpd_ssl_certificate }}"
+    #      ssl_key: "{{ httpd_ssl_key }}"
+    #      ssl_chain: "{{ httpd_ssl_chain }}"
+    #      ssl_ca: "{{ httpd_ssl_ca }}"
+    #      ssl_hsts: "{{ httpd_ssl_hsts }}"
+    #  - servername: cloud.example.com
+    #  - servername: mail.example.com
+    #      ssl_certificate: "/etc/pki/tls/certs/mail.example.com.pem"
+    #      ssl_key: "/etc/pki/tls/private/mail.example.com.key"
+    
+```httpd_vhosts_ssl``` configures the SSL VirtualHosts. The configuration is like ```httpd_vhosts```, with the exception of the added ```ssl_```-variables. They are however all optional. The necessary options like key and certificate will then use the values from ```httpd_ssl_certificate``` and ```httpd_ssl_key```.
+
+In this example, the item ```www.example.com``` has every available option set. 
+
 Dependencies
 ------------
 
