@@ -70,33 +70,6 @@ LogLevel warn
 #   Enable/Disable SSL for this virtual host.
 SSLEngine on
 
-#   SSL Protocol support:
-# List the enable protocol levels with which clients will be able to
-# connect.  Disable SSLv2 access by default:
-SSLProtocol {{ httpd_ssl_protocol }}
-
-#   SSL Cipher Suite:
-#   List the ciphers that the client is permitted to negotiate.
-#   See the mod_ssl documentation for a complete list.
-SSLCipherSuite {{ httpd_ssl_cipher }}
-
-#   Speed-optimized SSL Cipher configuration:
-#   If speed is your main concern (on busy HTTPS servers e.g.),
-#   you might want to force clients to specific, performance
-#   optimized ciphers. In this case, prepend those ciphers
-#   to the SSLCipherSuite list, and enable SSLHonorCipherOrder.
-#   Caveat: by giving precedence to RC4-SHA and AES128-SHA
-#   (as in the example below), most connections will no longer
-#   have perfect forward secrecy - if the server's key is
-#   compromised, captures of past or future traffic must be
-#   considered compromised, too.
-#SSLCipherSuite RC4-SHA:AES128-SHA:HIGH:MEDIUM:!aNULL:!MD5
-{% if httpd_ssl_honor_cipher %}
-SSLHonorCipherOrder on
-{% else %}
-#SSLHonorCipherOrder on
-{% endif %}
-
 #   Server Certificate:
 # Point SSLCertificateFile at a PEM encoded certificate.  If
 # the certificate is encrypted, then you will be prompted for a
@@ -226,11 +199,21 @@ BrowserMatch "MSIE [2-5]" \
 CustomLog logs/ssl_request_log \
           "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
-# Additional Configuration as specified in https://mozilla.github.io/server-side-tls/ssl-config-generator/
 
 # HSTS (mod_headers is required) (15768000 seconds = 6 months)
 Header always set Strict-Transport-Security "max-age={{ httpd_ssl_hsts }}"
 
+</VirtualHost>
+
+# Additional Configuration as specified in https://mozilla.github.io/server-side-tls/ssl-config-generator/
+
+SSLProtocol {{ httpd_ssl_protocol }}
+SSLCipherSuite {{ httpd_ssl_cipher }}
+{% if httpd_ssl_honor_cipher %}
+SSLHonorCipherOrder on
+{% else %}
+#SSLHonorCipherOrder on
+{% endif %}
 SSLCompression off
 SSLSessionTickets off
 
@@ -241,5 +224,3 @@ SSLStaplingResponderTimeout 5
 SSLStaplingReturnResponderErrors off
 SSLStaplingCache shmcb:/var/run/ocsp(128000)
 {% endif %}
-
-</VirtualHost>

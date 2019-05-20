@@ -22,8 +22,8 @@ httpd_disable_welcome: yes
 # Configure global ssl settings in /etc/httpd/conf.d/ssl.conf
 # Defaults to modern settings from
 # https://mozilla.github.io/server-side-tls/ssl-config-generator/
-httpd_ssl_protocol: 'all -SSLv3 -TLSv1 -TLSv1.1'
-httpd_ssl_cipher: HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+httpd_ssl_protocol: all -SSLv3 -TLSv1 -TLSv1.1
+httpd_ssl_cipher: ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
 httpd_ssl_honor_cipher: yes
 httpd_ssl_certificate: /etc/pki/tls/certs/localhost.crt
 httpd_ssl_key: /etc/pki/tls/private/localhost.key
