@@ -110,8 +110,11 @@ Example Playbook
 
 - Install *mod_auth_openidc*
 - Use the *event* MPM module and configure it
-- Use *wildcard.example.com* certificate 
+- Use *wildcard.example.com* certificate
+- Create vhost *www.example.com* with ssl
+- Create vhost *mail.example.com* with ssl
 
+Playbook:
 
     ---
     
@@ -130,7 +133,27 @@ Example Playbook
         httpd_disable_welcome: yes
         httpd_ssl_certificate: /etc/pki/tls/certs/wildcard.example.com.crt
         httpd_ssl_key: /etc/pki/tls/private/wildcard.example.com.key
-    
+        httpd_vhosts:
+          - servername: www.example.com
+            options: |
+              Redirect permanent / https://www.example.com/
+          - servername: mail.example.com
+            options: |
+              Redirect permanent / https://mail.example.com/    
+        httpd_vhosts_ssl:
+          - servername: www.example.com
+            documentroot: /var/www/html/
+            errorlog: /var/log/httpd/www.example.com-error.log
+            customlog: /var/log/httpd/www.example.com-access.log
+            ssl_certificate: "{{ httpd_ssl_certificate }}"
+            ssl_key: "{{ httpd_ssl_key }}"
+          - servername: mail.example.com
+            documentroot: /var/www/mail/
+            errorlog: /var/log/httpd/mail.example.com-error.log
+            customlog: /var/log/httpd/mail.example.com-access.log
+            ssl_certificate: "{{ httpd_ssl_certificate }}"
+            ssl_key: "{{ httpd_ssl_key }}"
+            
       roles:
       - tamay.httpd
 
