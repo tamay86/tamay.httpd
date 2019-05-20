@@ -20,15 +20,24 @@
     owner: root
     group: root
     mode: 0644
-  notify: "restart_httpd"
+  notify: restart_httpd
 
 - name: "Disable welcome.conf"
   replace:
     path: /etc/httpd/conf.d/welcome.conf
     regexp: '^((?!#))'
     replace: '#'
-  notify: "reload_httpd"
+  notify: reload_httpd
   when: httpd_disable_welcome | bool
+
+- name: "Copy /etc/httpd/conf.d/ssl.conf"
+  template:
+    src: ssl.conf.j2
+    dest: /etc/httpd/conf.d/ssl.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload_httpd
 
 - name: "Create /var/www/vhosts"
   file:

@@ -18,3 +18,16 @@ httpd_mpm_event_config: {}
 
 # Disables default welcome.conf
 httpd_disable_welcome: yes
+
+# Configure global ssl settings in /etc/httpd/conf.d/ssl.conf
+# Defaults to modern settings from
+# https://mozilla.github.io/server-side-tls/ssl-config-generator/
+httpd_ssl_protocol: 'all -SSLv3 -TLSv1 -TLSv1.1'
+httpd_ssl_cipher: HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+httpd_ssl_honor_cipher: yes
+httpd_ssl_certificate: /etc/pki/tls/certs/localhost.crt
+httpd_ssl_key: /etc/pki/tls/private/localhost.key
+httpd_ssl_chain: 'EMPTY'
+httpd_ssl_ca: 'EMPTY'
+httpd_ssl_hsts: 15768000
+httpd_ssl_oscp_stapling: yes
