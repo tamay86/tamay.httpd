@@ -2,17 +2,17 @@
 <VirtualHost *:443>
     ServerName {{ item.servername }}
 
-{% if item.errorlog is defined -%}
+{% if item.errorlog is defined %}
     ErrorLog {{ item.errorlog }}
-{% endif -%}
-
-{% if item.customlog is defined -%}
+{% endif %}
+{% if item.customlog is defined %}
     CustomLog {{ item.customlog }} combined
-{% endif -%}
+{% endif %}
 
-{% if item.documentroot is defined -%}
+{% if item.documentroot is defined %}
     DocumentRoot {{ item.documentroot }}
 {% endif %}
+
     SSLEngine on
     SSLCertificateFile {{ item.ssl_certificate | default(httpd_ssl_certificate) }}
     SSLCertificateKeyFile {{ item.ssl_key | default(httpd_ssl_key) }}
