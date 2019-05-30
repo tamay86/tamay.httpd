@@ -12,9 +12,9 @@ httpd_mpm_prefork_config: {}
 httpd_mpm_worker_config: {}
 httpd_mpm_event_config: {}
 # Example:
-#httpd_mpm_prefork_config:
-#  MaxRequestWorkers: 512
-#  ServerLimit: 512
+# httpd_mpm_prefork_config:
+#   MaxRequestWorkers: 512
+#   ServerLimit: 512
 
 # Disables default welcome.conf
 httpd_disable_welcome: yes
@@ -46,25 +46,25 @@ httpd_vhosts: []
 # <VirtualHost *:443> configuration
 httpd_vhosts_ssl: []
 # Example:
-#httpd_ssl_vhosts:
-#  - servername: www.example.com
-#      documentroot: /var/www/html/
-#      errorlog: /var/log/httpd/www.example.com-error.log
-#      customlog: /var/log/httpd/www.example.com-access.log
-#      options: |
-#        <Directory /var/www/html/>
-#            Options +FollowSymlinks
-#            AllowOverride All
-#        </Directory>
-#      ssl_protocol: "{{ httpd_ssl_protocol }}"
-#      ssl_cipher: "{{ httpd_ssl_cipher }}"
-#      ssl_honor_cipher: "{{ httpd_ssl_honor_cipher }}"
-#      ssl_certificate: "{{ httpd_ssl_certificate }}"
-#      ssl_key: "{{ httpd_ssl_key }}"
-#      ssl_chain: "{{ httpd_ssl_chain }}"
-#      ssl_ca: "{{ httpd_ssl_ca }}"
-#      ssl_hsts: "{{ httpd_ssl_hsts }}"
-#  - servername: cloud.example.com
-#  - servername: mail.example.com
-#      ssl_certificate: "{{ httpd_ssl_certificate }}"
-#      ssl_key: "{{ httpd_ssl_key }}"
+# httpd_ssl_vhosts:
+#   - servername: www.example.com
+#       documentroot: /var/www/html/
+#       errorlog: /var/log/httpd/www.example.com-error.log
+#       customlog: /var/log/httpd/www.example.com-access.log
+#       options: |
+#         <Directory /var/www/html/>
+#             Options +FollowSymlinks
+#             AllowOverride All
+#         </Directory>
+#       ssl_protocol: "{{ httpd_ssl_protocol }}"
+#       ssl_cipher: "{{ httpd_ssl_cipher }}"
+#       ssl_honor_cipher: "{{ httpd_ssl_honor_cipher }}"
+#       ssl_certificate: "{{ httpd_ssl_certificate }}"
+#       ssl_key: "{{ httpd_ssl_key }}"
+#       ssl_chain: "{{ httpd_ssl_chain }}"
+#       ssl_ca: "{{ httpd_ssl_ca }}"
+#       ssl_hsts: "{{ httpd_ssl_hsts }}"
+#   - servername: cloud.example.com
+#   - servername: mail.example.com
+#       ssl_certificate: "{{ httpd_ssl_certificate }}"
+#       ssl_key: "{{ httpd_ssl_key }}"

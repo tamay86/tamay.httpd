@@ -43,4 +43,4 @@
 
 
   roles:
-    - ../../tamay.httpd
+    - tamay.httpd
