@@ -46,7 +46,7 @@ httpd_vhosts: []
 # <VirtualHost *:443> configuration
 httpd_vhosts_ssl: []
 # Example:
-# httpd_ssl_vhosts:
+# httpd_vhosts_ssl:
 #   - servername: www.example.com
 #       documentroot: /var/www/html/
 #       errorlog: /var/log/httpd/www.example.com-error.log
